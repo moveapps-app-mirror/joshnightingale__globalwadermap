@@ -7,7 +7,7 @@ library(mapview)
 library(webshot)
 
 
-rFunction = function(gridsize=5, data) {
+rFunction = function(gridsize=5, min_pts=1, data) {
   
   #### make grid system ####
   # see https://github.com/r-barnes/dggridR for grid sizes etc.
@@ -43,12 +43,21 @@ rFunction = function(gridsize=5, data) {
                         count=NA, Nind=NA, Nspp=NA)
   
   
+  ## function to replaces NAs with 0
+  na_to_zero <- function(x) {
+    if(is.na(x)) {
+      x <- 0
+    }
+    return(x)
+  }
+  
+  
   ## loop through each cell (seqnum) & extract summaries
   for (ii in 1:nrow(hex_sum) ) {
     data_sub <- subset(data, seqnum==hex_sum$seqnum[ii])
-    hex_sum$count[ii] <- nrow(data_sub)
-    hex_sum$Nind[ii] <- length(unique(attr(data_sub, "track_data")$individual_id))
-    hex_sum$Nspp[ii] <- length(unique(attr(data_sub, "track_data")$taxon_canonical_name))
+    hex_sum$count[ii] <- nrow(data_sub) %>% na_to_zero
+    hex_sum$Nind[ii] <- length(unique(attr(data_sub, "track_data")$individual_id)) %>% na_to_zero
+    hex_sum$Nspp[ii] <- length(unique(attr(data_sub, "track_data")$taxon_canonical_name)) %>% na_to_zero
   }
   
   
@@ -59,7 +68,7 @@ rFunction = function(gridsize=5, data) {
   
   
   ## remove empty cells for faster loading
-  wrap_cells %<>% na.omit
+  wrap_cells %<>% subset(Locations >= min_pts)
   
   
   

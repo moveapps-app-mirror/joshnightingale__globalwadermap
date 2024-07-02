@@ -7,6 +7,13 @@
       "description": "Grid size: integer from 1 (largest cells) to 20 (smallest). See table at https://github.com/r-barnes/dggridR",
       "defaultValue": 5,
       "type": "INTEGER"
+    },
+    {
+      "id": "min_pts",
+      "name": "Minimum number of points",
+      "description": "Minimum number of points within a cell for it to be added to the map. Default = 1, i.e. only cells with no locations are removed.",
+      "defaultValue": 1,
+      "type": "INTEGER"
     }
   ],
   "dependencies": {

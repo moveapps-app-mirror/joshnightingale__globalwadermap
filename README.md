@@ -26,6 +26,8 @@ move2 object. Interactive htmlwidget map as .html artefact.
 
 `Grid size` (radius): Size of hexagonal grid cells (larger cell = slower map). Consult the table of resulutions at [github.com/r-barnes/dggridR](https://github.com/r-barnes/dggridR) (use a value from column `Res`). Unit: `integer`. Default: `5`.
 
+`Minimum number of points`: Minimum number of points within a cell for it to be added to the map. Default = 1, i.e. only empty cells (with no locations) are removed. (Enter 0 to return all cells within the extent of the tracking data).
+
 ### Most common errors
 *More testing required*
 
